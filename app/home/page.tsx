@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <p>Home</p>
+      <div className="w-screen h-screen flex" style={{ background: "/home.png" }}></div>
     </>
   );
 }

@@ -1,6 +1,41 @@
+"use client"
+import axios from "axios";
 import Image from "next/image";
+import React from "react";
+
+async function postLogin(email: string, password: string) {
+  try {
+    const loginData = { email: email, password: password };
+    const response = await axios.post('http://localhost:3000/users/login', loginData);
+    console.log(response.data);
+    alert("Login successful");
+  } catch (error) {
+    console.error('Error during login:', error);
+    alert("Login failed");
+  }
+}
 
 export default function LoginPage() {
+  //state variables for form inputs
+  const [username, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
+  //all handlers for form inputs
+  const emailChange = (e: React.ChangeEvent<HTMLInputElement>) => { setEmail(e.target.value) };
+  const passwordChange = (e: React.ChangeEvent<HTMLInputElement>) => { setPassword(e.target.value) };
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!username || !password) {
+      alert("Please fill all the fields");
+      return;
+    }
+    else {
+      postLogin(username, password);
+
+    }
+
+  }
   return (
     <div
       className="h-screen w-screen bg-cover bg-center flex items-center justify-center"
@@ -19,16 +54,18 @@ export default function LoginPage() {
             className="-mt-25"
           ></Image>
           <h1 className="text-5xl">Login</h1>
-          <form className="flex flex-col mt-5">
+          <form className="flex flex-col mt-5" onSubmit={handleLogin}>
             <input
               type="text"
-              placeholder="Username"
+              placeholder="Email"
               className="mb-4 p-5 pt-2 pb-2 rounded-full focus:outline-none shadow-[inset_4px_4px_8px_rgba(0,0,0,0.1),inset_-4px_-4px_8px_rgba(100,100,100,0.1)]"
+              onChange={emailChange}
             />
             <input
               type="password"
               placeholder="Password"
               className="mb-4 p-5 pt-2 pb-2 rounded-full focus:outline-none shadow-[inset_4px_4px_8px_rgba(0,0,0,0.1),inset_-4px_-4px_8px_rgba(100,100,100,0.1)]"
+              onChange={passwordChange}
             />
             <button
               type="submit"
