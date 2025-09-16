@@ -1,33 +1,38 @@
-"use client"
+"use client";
 import axios from "axios";
 import Image from "next/image";
 import React from "react";
 import { useRouter } from "next/navigation";
 
-async function postRegistration(name: string, email: string, password: string, phone: string) {
+async function postRegistration(
+  name: string,
+  email: string,
+  password: string,
+  phone: string
+) {
   try {
     const registrationData = {
       fullName: name,
       email: email,
       password: password,
       phone: Number(phone),
-      role: "admin"
+      role: "admin",
     };
-    const response = await axios.post('http://localhost:3000/users', registrationData);
+    const response = await axios.post(
+      "http://localhost:3000/users",
+      registrationData
+    );
     console.log(response.data);
     alert("Registration successful");
-
   } catch (error) {
-    console.error('Error during registration:', error);
+    console.error("Error during registration:", error);
     alert("Registration failed");
   }
-
 }
 
 export default function RegisterPage() {
   //redirection
   const router = useRouter();
-
 
   //all state variables for form inputs
   const [name, setName] = React.useState("");
@@ -38,17 +43,23 @@ export default function RegisterPage() {
   //all regex for validation
   const nameRegex = /^[a-zA-Z\s]+$/;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   const phoneRegex = /^\d{11}$/;
 
   //all change handlers for form inputs
-  const nameChange = (e: React.ChangeEvent<HTMLInputElement>) => { setName(e.target.value) };
-  const emailChange = (e: React.ChangeEvent<HTMLInputElement>) => { setEmail(e.target.value) };
-  const passwordChange = (e: React.ChangeEvent<HTMLInputElement>) => { setPassword(e.target.value) };
-  const phoneChange = (e: React.ChangeEvent<HTMLInputElement>) => { setPhone(e.target.value) };
-
-
-
+  const nameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
+  const emailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+  const passwordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+  const phoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhone(e.target.value);
+  };
 
   //submission handler with validation
   const handleSubmit = (e: React.FormEvent) => {
@@ -56,29 +67,25 @@ export default function RegisterPage() {
     if (!name || !email || !password || !phone) {
       alert("Please fill all the fields");
       return;
-    }
-    else if (!nameRegex.test(name)) {
+    } else if (!nameRegex.test(name)) {
       alert("Name can only contain letters and spaces");
       return;
-    }
-    else if (!emailRegex.test(email)) {
+    } else if (!emailRegex.test(email)) {
       alert("Please enter a valid email");
       return;
-    }
-    else if (!passwordRegex.test(password)) {
-      alert("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number and one special character");
+    } else if (!passwordRegex.test(password)) {
+      alert(
+        "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number and one special character"
+      );
       return;
-    }
-    else if (!phoneRegex.test(phone)) {
+    } else if (!phoneRegex.test(phone)) {
       alert("Phone number must be 11 digits long");
       return;
-    }
-    else {
+    } else {
       postRegistration(name, email, password, phone);
-      router.push('/login');
+      router.push("/login");
     }
-
-  }
+  };
 
   return (
     <div

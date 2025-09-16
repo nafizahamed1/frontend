@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import axios from "axios";
 import Image from "next/image";
 import React from "react";
@@ -6,11 +6,14 @@ import React from "react";
 async function postLogin(email: string, password: string) {
   try {
     const loginData = { email: email, password: password };
-    const response = await axios.post('http://localhost:3000/users/login', loginData);
+    const response = await axios.post(
+      "http://localhost:3000/users/login",
+      loginData
+    );
     console.log(response.data);
     alert("Login successful");
   } catch (error) {
-    console.error('Error during login:', error);
+    console.error("Error during login:", error);
     alert("Login failed");
   }
 }
@@ -21,21 +24,22 @@ export default function LoginPage() {
   const [password, setPassword] = React.useState("");
 
   //all handlers for form inputs
-  const emailChange = (e: React.ChangeEvent<HTMLInputElement>) => { setEmail(e.target.value) };
-  const passwordChange = (e: React.ChangeEvent<HTMLInputElement>) => { setPassword(e.target.value) };
+  const emailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+  const passwordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (!username || !password) {
       alert("Please fill all the fields");
       return;
-    }
-    else {
+    } else {
       postLogin(username, password);
-
     }
-
-  }
+  };
   return (
     <div
       className="h-screen w-screen bg-cover bg-center flex items-center justify-center"
