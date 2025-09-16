@@ -1,5 +1,11 @@
+import Navbar from "@/components/Navbar";
 import AboutContent from "../../components/AboutContent";
 
 export default function AboutPage() {
-  return <AboutContent />;
+  return (
+    <>
+      <Navbar></Navbar>
+      <AboutContent />
+    </>
+  );
 }
